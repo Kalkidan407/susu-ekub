@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.zhuwa_academy.model.SusuGroup;
 
-@Repository 
+
 public interface SUsuRepository extends JpaRepository<SusuGroup, Long> {
 
 
