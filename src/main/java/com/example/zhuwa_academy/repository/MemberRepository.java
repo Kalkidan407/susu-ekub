@@ -8,7 +8,11 @@ import com.example.zhuwa_academy.model.Member;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
-    boolean existsBySusuGroupIdAndNameIgnoreCase(Long groupId, String name);
+    boolean existsBySusuGroup_IdAndNameIgnoreCase(
+            Long groupId, String name);
 
-    List<Member> findBySusuGroupIdOrderByJoinOrderAsc(Long groupId);
+    List<Member> findBySusuGroup_IdOrderByJoinOrderAsc(
+            Long groupId);
+
+    long countBySusuGroup_Id(Long groupId);
 }

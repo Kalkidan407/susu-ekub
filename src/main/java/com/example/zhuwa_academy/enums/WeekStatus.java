@@ -4,3 +4,4 @@ public enum WeekStatus {
     OPEN,
     CLOSED
 }
+

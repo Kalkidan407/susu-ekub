@@ -1,40 +1,41 @@
 package com.example.zhuwa_academy.model;
 
-
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter 
-@Getter 
-@Entity 
+@Entity
+@Getter
+@Setter
+@Table(
+    name = "payouts",
+    uniqueConstraints = @UniqueConstraint(columnNames = "week_id")
+)
 public class Payout {
 
-    @Id 
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    private Member member; 
 
-    @ManyToOne
-    private List<Member> members ;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member recipient;
 
-    @OneToOne 
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "week_id", nullable = false, unique = true)
     private Week week;
 
-    private Integer weekNumber;
-
+    @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal amount;
 
-    
+    public Payout() {
+    }
+
+    public Payout(Member recipient, Week week, BigDecimal amount) {
+        this.recipient = recipient;
+        this.week = week;
+        this.amount = amount;
+    }
 }

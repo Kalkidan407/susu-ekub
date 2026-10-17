@@ -1,42 +1,42 @@
 package com.example.zhuwa_academy.model;
 
-
 import com.example.zhuwa_academy.enums.WeekStatus;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity 
-@Setter 
-@Getter 
+@Entity
+@Getter
+@Setter
+@Table(
+    name = "weeks",
+    uniqueConstraints = @UniqueConstraint(
+        columnNames = {"susu_group_id", "week_number"}
+    )
+)
 public class Week {
-    
-    @Id 
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private SusuGroup susGroup;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "susu_group_id", nullable = false)
+    private SusuGroup susuGroup;
 
+    @Column(name = "week_number", nullable = false)
     private Integer weekNumber;
 
     @Enumerated(EnumType.STRING)
-    private WeekStatus status;
+    @Column(nullable = false)
+    private WeekStatus status = WeekStatus.OPEN;
 
-    @OneToOne 
-    @JoinColumn (name = "payout_id")
-    private Payout payout;
+    public Week() {
+    }
 
-    @OneToMany 
-    @JoinColumn(name = "contribution_id")
-    private Contribution contribution;
-    
+    public Week(SusuGroup susuGroup, Integer weekNumber) {
+        this.susuGroup = susuGroup;
+        this.weekNumber = weekNumber;
+        this.status = WeekStatus.OPEN;
+    }
 }

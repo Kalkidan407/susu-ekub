@@ -1,60 +1,59 @@
 package com.example.zhuwa_academy.service;
 
-
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.zhuwa_academy.dtos.MemberDto.MemberRequestDto;
-import com.example.zhuwa_academy.dtos.MemberDto.MemberResponseDto;
 import com.example.zhuwa_academy.model.Member;
 import com.example.zhuwa_academy.model.SusuGroup;
 import com.example.zhuwa_academy.repository.MemberRepository;
 import com.example.zhuwa_academy.repository.SUsuRepository;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final SUsuRepository susuRepository;
+    private final SUsuRepository groupRepository;
+
+    public MemberService(
+            MemberRepository memberRepository,
+            SUsuRepository groupRepository) {
+        this.memberRepository = memberRepository;
+        this.groupRepository = groupRepository;
+    }
 
     @Transactional
-    public MemberResponseDto addMember(
-            Long groupId, MemberRequestDto request) {
-
-        SusuGroup group = susuRepository.findById(groupId)
-                .orElseThrow(() ->
-                        new IllegalArgumentException("Group not found"));
-
-        if (request == null || request.getName() == null
-                || request.getName().isBlank()) {
+    public Member addMember(Long groupId, String name) {
+        if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Member name is required");
         }
 
-        if (group.getMembers().size() >= group.getMaxMembers()) {
+        SusuGroup group = groupRepository.findById(groupId)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Group not found"));
+
+        long memberCount = memberRepository.countBySusuGroup_Id(groupId);
+
+        if (memberCount >= group.getMaxMembers()) {
             throw new IllegalArgumentException("Group is full");
         }
 
-        if (memberRepository.existsBySusuGroupIdAndNameIgnoreCase(
-                groupId, request.getName().trim())) {
-            throw new IllegalArgumentException("Member already exists");
+        if (memberRepository.existsBySusuGroup_IdAndNameIgnoreCase(
+                groupId, name.trim())) {
+            throw new IllegalArgumentException(
+                    "Member name already exists in this group");
         }
 
-        Member member = new Member();
-        member.setName(request.getName().trim());
-        member.setSusuGroup(group);
-        member.setJoinOrder(group.getMembers().size() + 1);
+        // Membership is fixed once the first week has started.
+        if (group.getCurrentWeekNo() > 1) {
+            throw new IllegalArgumentException(
+                    "Cannot add members after the first week closes");
+        }
 
-        Member saved = memberRepository.save(member);
+        Member member = new Member(
+                name.trim(),
+                group,
+                Math.toIntExact(memberCount + 1));
 
-        MemberResponseDto response = new MemberResponseDto();
-        response.setId(saved.getId());
-        response.setName(saved.getName());
-        response.setJoinOrder(saved.getJoinOrder());
-
-        return response;
+        return memberRepository.save(member);
     }
 }

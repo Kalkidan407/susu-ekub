@@ -7,6 +7,12 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Table(
+    name = "members",
+    uniqueConstraints = @UniqueConstraint(
+        columnNames = {"susu_group_id", "name"}
+    )
+)
 public class Member {
 
     @Id
@@ -16,10 +22,19 @@ public class Member {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "susu_group_id", nullable = false)
     private SusuGroup susuGroup;
 
     @Column(nullable = false)
     private Integer joinOrder;
+
+    public Member() {
+    }
+
+    public Member(String name, SusuGroup susuGroup, Integer joinOrder) {
+        this.name = name;
+        this.susuGroup = susuGroup;
+        this.joinOrder = joinOrder;
+    }
 }

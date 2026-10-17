@@ -18,9 +18,11 @@ public interface ContributionRepository
         WHERE c.member.id = :memberId
           AND c.week.id = :weekId
         """)
-    BigDecimal sumMemberPaymentsForWeek(
+    BigDecimal sumPayments(
             @Param("memberId") Long memberId,
             @Param("weekId") Long weekId);
 
-    List<Contribution> findByWeekId(Long weekId);
+    List<Contribution> findByWeek_Id(Long weekId);
+
+    List<Contribution> findByMember_Id(Long memberId);
 }
