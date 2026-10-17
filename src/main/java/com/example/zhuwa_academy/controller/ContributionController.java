@@ -1,30 +1,45 @@
 package com.example.zhuwa_academy.controller;
 
-import com.example.zhuwa_academy.service.ContributionService;
+import java.math.BigDecimal;
+import java.util.Map;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
+import com.example.zhuwa_academy.model.Contribution;
+import com.example.zhuwa_academy.service.ContributionService;
 
 @RestController
 @RequestMapping("/api/groups/{groupId}/contributions")
 public class ContributionController {
 
-    private final ContributionService contributionService;
+    private final ContributionService service;
 
-    public ContributionController(ContributionService contributionService) {
-        this.contributionService = contributionService;
+    public ContributionController(ContributionService service) {
+        this.service = service;
     }
+
+    public record ContributionRequest(
+            @NotNull Long memberId,
+            @NotNull @DecimalMin("0.01") BigDecimal amount) {}
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Object recordContribution(
+    public Map<String, Object> recordContribution(
             @PathVariable Long groupId,
-            @RequestParam Long memberId,
-            @RequestParam BigDecimal amount) {
+            @Valid @RequestBody ContributionRequest request) {
 
-        return contributionService.recordContribution(
-                groupId, memberId, amount
-        );
+        Contribution contribution = service.recordContribution(
+                groupId, request.memberId(), request.amount());
+
+        return Map.of(
+                "id", contribution.getId(),
+                "memberId", contribution.getMember().getId(),
+                "weekNumber", contribution.getWeek().getWeekNumber(),
+                "amount", contribution.getAmount());
     }
 }
