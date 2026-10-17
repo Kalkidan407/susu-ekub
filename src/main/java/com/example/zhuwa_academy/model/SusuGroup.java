@@ -19,7 +19,7 @@ import lombok.Setter;
 @Entity 
 @Setter 
 @Getter 
-
+@Data 
 public class SusuGroup {
 
     @Id 
@@ -29,11 +29,11 @@ public class SusuGroup {
     @Column(nullable = false)
     private String groupName;
      
-@OneToMany (mappedBy = "susuGroup")
-private List<Member> members = new ArrayList<>();
+  @OneToMany (mappedBy = "member_id")
+   private List<Member> memberNames = new ArrayList<>();
 
-@ManyToOne 
-private Week week;
+   @ManyToOne 
+   private Week week;
 
     @Column (nullable = false)
     private Integer maxMembers;

@@ -1,36 +1,29 @@
 package com.example.zhuwa_academy.model;
 
-import java.math.BigDecimal;
 
-import jakarta.annotation.Generated;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+
+import java.math.BigDecimal;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-
-
-@Entity 
+@Entity
+@Getter
 @Setter
-@Getter 
 public class Contribution {
-    
-    @Id 
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "member_id")
     private Member member;
 
-    private Integer weekNumber;
-    
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "week_id")
+    private Week week;
+
+    @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal amount;
-
-    @ManyToOne 
-    private  Week week;
-
-
-    
 }
