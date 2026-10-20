@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.zhuwa_academy.model.Member;
+import com.example.zhuwa_academy.model.User;
 import com.example.zhuwa_academy.service.MemberService;
 
 @RestController
@@ -23,7 +24,7 @@ public class MemberController {
     }
 
     public record AddMemberRequest(
-            @NotBlank @Size(max = 100) String name) {}
+            @NotBlank @Size(max = 100) User name) {}
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

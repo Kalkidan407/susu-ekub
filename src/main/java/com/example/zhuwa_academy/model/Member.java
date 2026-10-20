@@ -20,7 +20,7 @@ public class Member {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private User name;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "susu_group_id", nullable = false)
@@ -32,7 +32,7 @@ public class Member {
     public Member() {
     }
 
-    public Member(String name, SusuGroup susuGroup, Integer joinOrder) {
+    public Member(User name, SusuGroup susuGroup, Integer joinOrder) {
         this.name = name;
         this.susuGroup = susuGroup;
         this.joinOrder = joinOrder;

@@ -49,7 +49,7 @@ public class ReportController {
         List<Member> members =
                 memberRepository.findBySusuGroup_IdOrderByJoinOrderAsc(groupId);
 
-        List<String> paidInFull = new ArrayList<>();
+        List<User> paidInFull = new ArrayList<>();
         List<Map<String, Object>> outstanding = new ArrayList<>();
 
         for (Member member : members) {

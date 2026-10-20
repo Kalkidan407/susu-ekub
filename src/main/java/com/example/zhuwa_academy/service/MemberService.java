@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.zhuwa_academy.model.Member;
 import com.example.zhuwa_academy.model.SusuGroup;
+import com.example.zhuwa_academy.model.User;
 import com.example.zhuwa_academy.repository.MemberRepository;
 import com.example.zhuwa_academy.repository.SUsuRepository;
 
@@ -22,8 +23,8 @@ public class MemberService {
     }
 
     @Transactional
-    public Member addMember(Long groupId, String name) {
-        if (name == null || name.isBlank()) {
+    public Member addMember(Long groupId, User name) {
+        if (name == null ) {
             throw new IllegalArgumentException("Member name is required");
         }
 
@@ -38,7 +39,7 @@ public class MemberService {
         }
 
         if (memberRepository.existsBySusuGroup_IdAndNameIgnoreCase(
-                groupId, name.trim())) {
+                groupId, name)) {
             throw new IllegalArgumentException(
                     "Member name already exists in this group");
         }
@@ -50,7 +51,7 @@ public class MemberService {
         }
 
         Member member = new Member(
-                name.trim(),
+                name,
                 group,
                 Math.toIntExact(memberCount + 1));
 
