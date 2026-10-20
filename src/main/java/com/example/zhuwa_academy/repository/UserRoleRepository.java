@@ -1,0 +1,11 @@
+package com.example.zhuwa_academy.repository;
+
+import java.util.UUID;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.example.zhuwa_academy.model.User;
+
+public interface UserRoleRepository  extends JpaRepository<User, UUID>{
+    
+}
