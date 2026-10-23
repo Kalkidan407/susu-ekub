@@ -1,8 +1,6 @@
 package com.example.zhuwa_academy.enums;
 
-public enum UserRole {
-    APP_ADMIN,
+public enum MembershipRole {
     GROUP_ADMIN,
     GROUP_MEMBER
-    
 }

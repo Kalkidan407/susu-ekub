@@ -9,18 +9,18 @@ import com.example.zhuwa_academy.model.User;
 import com.example.zhuwa_academy.repository.MemberRepository;
 import com.example.zhuwa_academy.repository.SUsuRepository;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 @Service
+@AllArgsConstructor 
+ 
 public class MemberService {
 
     private final MemberRepository memberRepository;
     private final SUsuRepository groupRepository;
 
-    public MemberService(
-            MemberRepository memberRepository,
-            SUsuRepository groupRepository) {
-        this.memberRepository = memberRepository;
-        this.groupRepository = groupRepository;
-    }
+   
 
     @Transactional
     public Member addMember(Long groupId, User name) {

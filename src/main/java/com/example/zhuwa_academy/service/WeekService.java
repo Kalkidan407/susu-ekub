@@ -17,7 +17,12 @@ import com.example.zhuwa_academy.repository.PayoutRepository;
 import com.example.zhuwa_academy.repository.SUsuRepository;
 import com.example.zhuwa_academy.repository.WeekRepository;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 @Service
+@AllArgsConstructor 
+
 public class WeekService {
 
     private final SUsuRepository groupRepository;
@@ -26,18 +31,7 @@ public class WeekService {
     private final ContributionRepository contributionRepository;
     private final PayoutRepository payoutRepository;
 
-    public WeekService(
-            SUsuRepository groupRepository,
-            MemberRepository memberRepository,
-            WeekRepository weekRepository,
-            ContributionRepository contributionRepository,
-            PayoutRepository payoutRepository) {
-        this.groupRepository = groupRepository;
-        this.memberRepository = memberRepository;
-        this.weekRepository = weekRepository;
-        this.contributionRepository = contributionRepository;
-        this.payoutRepository = payoutRepository;
-    }
+ 
 
     @Transactional
     public Payout closeWeek(Long groupId) {

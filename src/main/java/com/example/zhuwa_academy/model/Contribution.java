@@ -27,9 +27,6 @@ public class Contribution {
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal amount;
 
-    public Contribution() {
-    }
-
     public Contribution(Member member, Week week, BigDecimal amount) {
         this.member = member;
         this.week = week;

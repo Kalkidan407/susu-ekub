@@ -15,7 +15,10 @@ import com.example.zhuwa_academy.repository.MemberRepository;
 import com.example.zhuwa_academy.repository.SUsuRepository;
 import com.example.zhuwa_academy.repository.WeekRepository;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor 
 public class ContributionService {
 
     private final ContributionRepository contributionRepository;
@@ -23,16 +26,6 @@ public class ContributionService {
     private final SUsuRepository groupRepository;
     private final WeekRepository weekRepository;
 
-    public ContributionService(
-            ContributionRepository contributionRepository,
-            MemberRepository memberRepository,
-            SUsuRepository groupRepository,
-            WeekRepository weekRepository) {
-        this.contributionRepository = contributionRepository;
-        this.memberRepository = memberRepository;
-        this.groupRepository = groupRepository;
-        this.weekRepository = weekRepository;
-    }
 
     @Transactional
     public Contribution recordContribution(

@@ -10,18 +10,16 @@ import com.example.zhuwa_academy.model.Week;
 import com.example.zhuwa_academy.repository.SUsuRepository;
 import com.example.zhuwa_academy.repository.WeekRepository;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor 
+
 public class SusGroupService {
 
     private final SUsuRepository groupRepository;
     private final WeekRepository weekRepository;
 
-    public SusGroupService(
-            SUsuRepository groupRepository,
-            WeekRepository weekRepository) {
-        this.groupRepository = groupRepository;
-        this.weekRepository = weekRepository;
-    }
 
     @Transactional
     public SusuGroup createGroup(

@@ -1,5 +1,7 @@
 package com.example.zhuwa_academy.dtos.MemberDto;
 
+import com.example.zhuwa_academy.model.User;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +10,6 @@ import lombok.Setter;
 public class MemberResponseDto {
 
     private Long id;
-    private String name;
+    private User name;
     private Integer joinOrder;
 }

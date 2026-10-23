@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import com.example.zhuwa_academy.model.*;
 import com.example.zhuwa_academy.repository.*;
 
+import lombok.AllArgsConstructor;
+
 @RestController
+@AllArgsConstructor 
 @RequestMapping("/api/groups/{groupId}/report")
 public class ReportController {
 
@@ -21,18 +24,7 @@ public class ReportController {
     private final ContributionRepository contributionRepository;
     private final PayoutRepository payoutRepository;
 
-    public ReportController(
-            SUsuRepository groupRepository,
-            MemberRepository memberRepository,
-            WeekRepository weekRepository,
-            ContributionRepository contributionRepository,
-            PayoutRepository payoutRepository) {
-        this.groupRepository = groupRepository;
-        this.memberRepository = memberRepository;
-        this.weekRepository = weekRepository;
-        this.contributionRepository = contributionRepository;
-        this.payoutRepository = payoutRepository;
-    }
+ 
 
     @GetMapping
     public Map<String, Object> getReport(@PathVariable Long groupId) {

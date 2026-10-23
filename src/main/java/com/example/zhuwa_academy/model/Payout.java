@@ -30,8 +30,7 @@ public class Payout {
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal amount;
 
-    public Payout() {
-    }
+  
 
     public Payout(Member recipient, Week week, BigDecimal amount) {
         this.recipient = recipient;

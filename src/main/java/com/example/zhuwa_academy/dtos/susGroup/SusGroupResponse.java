@@ -12,7 +12,8 @@ import lombok.Setter;
 @Data 
 @Setter 
 @NoArgsConstructor 
- 
+@AllArgsConstructor 
+
 public class SusGroupResponse {
 
     private Long id;
